@@ -1,7 +1,8 @@
 import MultipeerConnectivity
 
 extension MCSessionState {
-    func description() -> String {
+    public func description() -> String {
+
         switch self {
             case .connecting:   return "connecting"
             case .connected:    return "connected"
@@ -9,7 +10,9 @@ extension MCSessionState {
             @unknown default:   return "unknown"
         }
     }
-    func icon() -> String {
+
+    public func icon() -> String {
+        
         switch self {
             case .connecting:   return "❓"
             case .connected:    return "🤝"

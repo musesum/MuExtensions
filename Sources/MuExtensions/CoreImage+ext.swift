@@ -6,7 +6,8 @@ import CoreImage
 
 extension CGImage {
 
-    func pixelData() -> [UInt8]? {
+    public func pixelData() -> [UInt8]? {
+
         let sizeW = width
         let sizeH = height
         let bytesPerPixel = 4
@@ -14,6 +15,7 @@ extension CGImage {
         let dataSize = faceSize * bytesPerPixel
         let bytesPerRow = bytesPerPixel * sizeW
         var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
+        
         if let context = CGContext(
             data             : &pixelData,
             width            : sizeW,
@@ -33,7 +35,7 @@ extension CGImage {
 
 extension CIImage {
 
-    func pixelData(_ rect: CGRect) -> [UInt8]? {
+    public func pixelData(_ rect: CGRect) -> [UInt8]? {
         let context = CIContext()
         let cgImage = context.createCGImage(self, from: rect)
         return cgImage?.pixelData()

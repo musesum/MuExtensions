@@ -3,6 +3,7 @@
 import simd
 
 extension SIMD2<Float> {
+    
     public func script(_ range: Int) -> String {
         "(\(x.digits(range)),\(y.digits(range)))"
     }
@@ -11,6 +12,7 @@ extension SIMD2<Float> {
     }
 }
 extension SIMD3<Float> {
+    
     public func hash(_ max: Float) -> Scalar {
         let h = ((x+max) * max * max) + ((y+max) * max) + (z + max)
         return h
@@ -23,7 +25,8 @@ extension SIMD3<Float> {
     }
 }
 extension SIMD4<Float> {
-    func hash(_ max: Float) -> Scalar {
+ 
+    public func hash(_ max: Float) -> Scalar {
         let h = ((x+max) * max * max) + ((y+max) * max) + (z + max)
         return h
     }
@@ -46,8 +49,6 @@ extension SIMD4<Double> {
         SIMD3(x, y, z)
     }
 }
-
-
 extension simd_float4x4 {
 
     public func script(_ range: Int) -> String {
@@ -58,6 +59,7 @@ extension simd_float4x4 {
     }
 }
 extension simd_double4x4 {
+
     public func script(_ range: Int) -> String {
         return "(\(columns.0.script(range)), \(columns.1.script(range)), \(columns.2.script(range)), \(columns.3.script(range)))"
     }

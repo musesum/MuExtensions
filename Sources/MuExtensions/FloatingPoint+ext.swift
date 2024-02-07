@@ -8,7 +8,8 @@ extension Formatter {
     static let number = NumberFormatter()
 }
 public extension FloatingPoint {
-    func digits(_ range: ClosedRange<Int>) -> String {
+
+    public func digits(_ range: ClosedRange<Int>) -> String {
         let lower: Int
         let minus: Bool
         if range.lowerBound < 0 {
@@ -24,7 +25,8 @@ public extension FloatingPoint {
         let str = Formatter.number.string(for:  self) ?? ""
         return minus && self < 0 ? str : " " + str
     }
-    func digits(_ range: Int) -> String {
+    public func digits(_ range: Int) -> String {
+        
         let lower: Int
         let minus: Bool
         if range < 0 {

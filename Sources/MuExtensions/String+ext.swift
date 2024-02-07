@@ -16,7 +16,7 @@ extension String {
     }
 
 
-    func pad(_ len: Int) -> String {
+    public func pad(_ len: Int) -> String {
         let ofs = len < 0 ? max(0, count+len) : 0
         let last = min(ofs + abs(len), count)
         let start = index(startIndex,offsetBy: ofs)
@@ -34,7 +34,7 @@ extension String {
 
     /// transform `"CamelBackName"` => `"camel back name"`
     /// - note: https://stackoverflow.com/a/50202999/419740
-    func titleCase() -> String {
+    public func titleCase() -> String {
         return self
             .replacingOccurrences(of: "([A-Z])",
                                   with: " $1",
@@ -44,12 +44,12 @@ extension String {
             .lowercased()
     }
 
-    func roundColonSpace() -> String {
+    public func roundColonSpace() -> String {
         if self.hasSuffix("= ") { return ""  }
         if self.hasSuffix("=")  { return " " }
         else                    { return " = "}
     }
-    func singleSuffix(_ suf: String) -> String {
+    public func singleSuffix(_ suf: String) -> String {
         if hasSuffix(suf) { return self }
         var dropCount = 0
         for char in self.reversed() {
@@ -64,6 +64,7 @@ extension String {
 
     /// transform `" one  two   three  "` => `"one two three"`
     public func removeLines() -> String {
+
         var result = ""
         var prevChar = Character("\0")
         for char in self {
@@ -85,6 +86,7 @@ extension String {
     }
     /// transform `"one\n\n two\n \n three   "` => `"one\n two\n three   "`
     public func reduceLines() -> String {
+
         var result = ""
         var prevChar = Character("\n")
         for char in self {
@@ -110,22 +112,20 @@ extension String {
         return self+s
     }
 
-}
-extension String {
-
-    func substring(from: Int) -> String {
+    public func substring(from: Int) -> String {
         return self[min(from, count) ..< count]
     }
 
-    func substring(from: Int, to: Int) -> String {
+    public func substring(from: Int, to: Int) -> String {
         return self[min(from, count) ..< min(to, count)]
     }
 
-    func substring(to: Int) -> String {
+    public func substring(to: Int) -> String {
         return self[0 ..< max(0, to)]
     }
 
-    subscript (r: Range<Int>) -> String {
+    public subscript (r: Range<Int>) -> String {
+
         let range = Range(uncheckedBounds: (lower: max(0, min(count, r.lowerBound)),
                                             upper: min(count, max(0, r.upperBound))))
         let s = index(startIndex, offsetBy: range.lowerBound)
@@ -155,18 +155,23 @@ extension String {
 
         return (prefix, wildcard, suffix)
     }
-    func matches(pre prefix: String, suf suffix: String) -> Bool {
+
+    public func matches(pre prefix: String, suf suffix: String) -> Bool {
+
         return hasPrefix(prefix) && hasSuffix(suffix)
     }
 
     /// add a space if last character is not a space of left paren
     public func parenSpace(delim: String = "") -> String {
+    
         if last == "(" { return "" }
         if last == " " { return "" }
         else           { return delim + " "}
     }
+
     /// append string to self with spacing
     public mutating func spacePlus(_ str: String?) {
+        
         guard let str else { return }
         if str == "" { return }
         if      str  == "," { self = without(trailing: " ") + str }
@@ -174,23 +179,27 @@ extension String {
         else if last == " " { self += str }
         else                { self = isEmpty ? str : with(trailing: " ") + str }
     }
+
     /// remove trailing spaces before adding character.
     /// often used to insure a single trailing space, instead of two.
     public func with(trailing: String) -> String {
+    
         var trim = self
         while trim.last == " " { trim.removeLast() }
         return trim + trailing
     }
+
     /// remove trailing spaces
     /// often used to insure a single trailing space, instead of two.
     public func without(trailing: String) -> String {
+    
         var trim = self
         while let last = trim.last, trailing.contains(last) { trim.removeLast() }
         return trim
     }
 
-
     static public func * (lhs: String, rhs: Int) -> String {
+
         var str = ""
         for _ in 0 ..< rhs {
             str += lhs
@@ -199,6 +208,7 @@ extension String {
     }
 
     public func strHash() -> Int {
+  
         var result = Int (5381)
         let buf = [UInt8](self.utf8)
         for b in buf {
@@ -206,8 +216,10 @@ extension String {
         }
         return result
     }
+
     // Divider to separate listings
     public func divider(_ length: Int = 30) -> String {
+    
         return self + "\n" + "─".padding(toLength: 30, withPad: "─", startingAt: 0) + "\n"
     }
 

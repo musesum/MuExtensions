@@ -8,7 +8,8 @@ extension Data {
      - Parameter reading: The input stream to read data from.
      - Note: closes input stream
      */
-    init(reading input: InputStream) {
+    public init(reading input: InputStream) {
+
         self.init()
         input.open()
         let bufferSize = 1024
@@ -28,7 +29,8 @@ extension Data {
      - Parameter byteCount: The maximum number of bytes to read from `reading`.
      - Note: Does _not_ close the specified stream.
      */
-    init(reading input: InputStream, for byteCount: Int) {
+    public init(reading input: InputStream, for byteCount: Int) {
+        
         self.init()
         input.open()
 
@@ -37,7 +39,9 @@ extension Data {
         self.append(buffer, count: read)
         buffer.deallocate()
     }
+
     public var bytes: [UInt8] {
+        
         return [UInt8](self)
     }
 }

@@ -14,6 +14,7 @@ extension Array where Element == Double {
         }
         return result
     }
+
     public static func + (lhs: [Double], rhs: [Double]) -> [Double] {
         var result = [Double]()
         for index in 0 ..< lhs.count {
@@ -23,6 +24,7 @@ extension Array where Element == Double {
         }
         return result
     }
+    
     public static func * (lhs: [Double], rhs: [Double]) -> [Double] {
         var result = [Double]()
         for  index in 0 ..< lhs.count {
@@ -32,6 +34,7 @@ extension Array where Element == Double {
         }
         return result
     }
+    
     public static func * (lhs: [Double], rhs: Double) -> [Double] {
         var result = [Double]()
         for  left in lhs {
@@ -47,7 +50,8 @@ extension Array where Element == Double {
     }
 }
 extension Array where Element: Numeric, Element: ExpressibleByIntegerLiteral {
-    static func + (lhs: Array, rhs: Array) -> Array {
+
+    public static func + (lhs: Array, rhs: Array) -> Array {
         guard lhs.count == rhs.count else {
             fatalError("Arrays must have the same size to be added")
         }
@@ -58,7 +62,8 @@ extension Array where Element: Numeric, Element: ExpressibleByIntegerLiteral {
         }
         return result
     }
-    static func - (lhs: Array, rhs: Array) -> Array {
+    
+    public static func - (lhs: Array, rhs: Array) -> Array {
         guard lhs.count == rhs.count else {
             fatalError("Arrays must have the same size to be added")
         }
@@ -71,27 +76,32 @@ extension Array where Element: Numeric, Element: ExpressibleByIntegerLiteral {
     }
 }
 extension Array where Element: FloatingPoint {
-    static func / (lhs: Array, rhs: Element) -> Array {
+
+    public static func / (lhs: Array, rhs: Element) -> Array {
         return lhs.map { $0 / rhs }
     }
-    static func * (lhs: Array, rhs: Element) -> Array {
+    
+    public static func * (lhs: Array, rhs: Element) -> Array {
         return lhs.map { $0 * rhs }
     }
 }
 
 
 extension Array where Element == UInt8 {
-    var data: Data {
+    
+    public var data: Data {
         return Data(self)
     }
 }
 extension Array where Element == UInt8 {
+    
     public func toAsciiString() -> String? {
         String(bytes: self, encoding: .ascii)
     }
 }
 
 extension Array where Element == UInt8 {
+    
     public func toString() -> String? {
         String(bytes: self, encoding: .utf8)
     }

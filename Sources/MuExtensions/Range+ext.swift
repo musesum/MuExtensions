@@ -1,9 +1,4 @@
-//
-//  value+ext.swift
-//  DeepMenu
-//
 //  created by musesum on 1/13/22.
-//
 
 import Foundation
 
@@ -15,8 +10,8 @@ extension ClosedRange {
     }
 
 }
-
-func scale(_ value: Double,
+//???
+public func scale(_ value: Double,
            from: ClosedRange<Double>,
            to: ClosedRange<Double>,
            invert: Bool = false) -> Double {

@@ -14,17 +14,25 @@ extension CGRect {
     public static func / (lhs: CGRect, rhs: CGFloat) -> CGRect {
 
         if rhs > 0 {
-            return CGRect(x: lhs.minX / rhs, y: lhs.minY / rhs, width: lhs.width / rhs, height: lhs.height / rhs)
+            return CGRect(x: lhs.minX / rhs,
+                          y: lhs.minY / rhs,
+                          width: lhs.width / rhs,
+                          height: lhs.height / rhs)
         } else {
             return .zero
         }
     }
     public static func * (lhs: CGRect, rhs: CGFloat) -> CGRect {
-            return CGRect(x: lhs.minX * rhs, y: lhs.minY * rhs, width: lhs.width * rhs, height: lhs.height * rhs)
+
+            return CGRect(x: lhs.minX * rhs, 
+                          y: lhs.minY * rhs,
+                          width: lhs.width * rhs,
+                          height: lhs.height * rhs)
     }
     
 
     public func horizontal() -> Bool {
+
         return size.width > size.height
     }
 
@@ -39,6 +47,7 @@ extension CGRect {
                          y: max(y, min(p.y, y + h)))
         return pp
     }
+
     public func between(_ p: CGRect, _ insets: UIEdgeInsets = .zero) -> CGRect {
 
         let x = origin.x + insets.left
@@ -62,6 +71,7 @@ extension CGRect {
 
         return pp
     }
+
     public var center: CGPoint { get   {
         let x = origin.x
         let y = origin.y
@@ -114,7 +124,7 @@ extension CGRect {
         return ppp
     }
 
-    func cornerDistance() -> CGFloat {
+    public func cornerDistance() -> CGFloat {
 
         let w = size.width
         let h = size.height
@@ -126,7 +136,7 @@ extension CGRect {
     /// before and after are two finger pinch bounding rectangle.
     /// while pinching, rescale the current rect
     /// while shifting center shift rootd on direction of pinch
-    func reScale(before: CGRect, after: CGRect) -> CGRect {
+    public func reScale(before: CGRect, after: CGRect) -> CGRect {
 
         let scale = after.cornerDistance() / before.cornerDistance()
         let delta = after.center - before.center
@@ -144,6 +154,7 @@ extension CGRect {
     }
 
     public func pad (_ pad: CGFloat) -> CGRect {
+        
         let xx = origin.x - pad
         let yy = origin.y - pad
         let ww = width + pad * 2
@@ -153,12 +164,15 @@ extension CGRect {
     }
 
     public func shift (_ shift: CGPoint) -> CGRect {
+    
         let xx = origin.x + shift.x
         let yy = origin.y + shift.y
         let s = CGRect(x: xx, y: yy, width: width, height: height)
         return s
     }
+
     public func shift (_ shift: CGSize) -> CGRect {
+
         let xx = origin.x + shift.width
         let yy = origin.y + shift.height
         let s = CGRect(x: xx, y: yy, width: width, height: height)
@@ -166,6 +180,7 @@ extension CGRect {
     }
 
     public static func + (lhs: CGRect, rhs: CGPoint) -> CGRect {
+
         let xx = lhs.origin.x + rhs.x
         let yy = lhs.origin.y + rhs.y
         let ww = lhs.width
@@ -173,7 +188,9 @@ extension CGRect {
         let s = CGRect(x: xx, y: yy, width: ww, height: hh)
         return s
     }
+
     public static func - (lhs: CGRect, rhs: CGPoint) -> CGRect {
+
         let xx = lhs.origin.x + rhs.x
         let yy = lhs.origin.y + rhs.y
         let ww = lhs.width
@@ -181,7 +198,9 @@ extension CGRect {
         let s = CGRect(x: xx, y: yy, width: ww, height: hh)
         return s
     }
+
     public func extend(_ from: CGRect) -> CGRect {
+
         if self == .zero {
             //log("from", [from])
             return from
@@ -207,11 +226,6 @@ extension CGRect {
         let ry1 = max(sy1, fy1)
 
         let result = CGRect(x: rx0, y: ry0, width: rx1-rx0, height: ry1-ry0)
-
-//        log("extend",["self", [sx0,sx1,sy0,sy1],
-//                      "from", [fx0,fx1,fy0,fy1],
-//                      "equal", [rx0,rx1,ry0,ry1],
-//                      " result ", result.size])
         return result
     }
 }
@@ -220,6 +234,7 @@ extension CGPoint {
     public var script: String {
         "(\(x.digits(0)),\(y.digits(0)))"
     }
+
     public static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         let p = CGPoint(x: lhs.x - rhs.x,
                         y: lhs.y - rhs.y)
@@ -264,6 +279,7 @@ extension CGPoint {
         let p = CGPoint(x: xx, y: yy)
         return p
     }
+
     public static func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
 
         let xx = lhs.x * rhs
@@ -271,7 +287,9 @@ extension CGPoint {
         let p = CGPoint(x: xx, y: yy)
         return p
     }
+
     public func distance(_ from: CGPoint) -> CGFloat {
+        
         let result = sqrt((x-from.x)*(x-from.x) +
                           (y-from.y)*(y-from.y) )
         return result
@@ -279,15 +297,19 @@ extension CGPoint {
     
     /// round to nearest grid
     public func grid(_ divisions: CGFloat) -> CGPoint {
+    
         if divisions > 0 {
             return  CGPoint(x: round(x * divisions) / divisions,
                             y: round(y * divisions) / divisions)
         }
         return self
     }
+
     public func string(_ format: String = "%2.0f,%-2.0f") -> String {
+
         return String(format: format, x, y) // touch delta
     }
+    
     public init(_ size: CGSize) {
         self.init()
         x = size.width
@@ -299,26 +321,31 @@ extension CGPoint {
 }
 
 extension CGSize {
+    
     public var script: String {
         "(\(width.digits(0)),\(height.digits(0)))"
     }
+    
     public init(_ xy: CGPoint) {
         self.init()
         self.width = xy.x
         self.height = xy.y
     }
+    
     public static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
         let ww = lhs.width - rhs.width
         let hh = lhs.height - rhs.height
         let s = CGSize(width: ww, height: hh)
         return s
     }
+    
     public static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
         let ww = lhs.width + rhs.width
         let hh = lhs.height + rhs.height
         let s = CGSize(width: ww, height: hh)
         return s
     }
+
     public static func + (lhs: CGSize, rhs: CGFloat) -> CGSize {
         let ww = lhs.width + rhs
         let hh = lhs.height + rhs
@@ -355,6 +382,7 @@ extension CGSize {
     }
     
     public func string(_ format: String = "%2.0f,%-2.0f") -> String {
+
         return String(format: format, width, height) // touch delta
     }
     
@@ -378,6 +406,7 @@ extension CGSize {
 }
 
 extension CGSize: Hashable {
+
     public func hash(into hasher: inout Hasher) {
 
         hasher.combine(width*9999)

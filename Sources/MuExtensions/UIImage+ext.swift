@@ -20,6 +20,7 @@ extension UIImage {
     }
 
     public func circularImage(size: CGSize?) -> UIImage? {
+        
         let newSize = size ?? self.size
 
         let minEdge = min(newSize.height, newSize.width)
@@ -46,7 +47,8 @@ extension UIImage {
         return nil
     }
 
-    func cropImage(toRect rect: CGRect) -> UIImage? {
+    public func cropImage(toRect rect: CGRect) -> UIImage? {
+
         if let imageRef = self.cgImage?.cropping(to: rect) {
             return UIImage(cgImage: imageRef)
         }
