@@ -36,6 +36,9 @@ public extension SIMD4<Float> {
     var script: String {
         "(\(x.digits(-1)),\(y.digits(-1)),\(z.digits(-1)),\(w.digits(-1)))"
     }
+    var xyz: SIMD3<Scalar> {
+        SIMD3(x, y, z)
+    }
 }
 public extension SIMD4<Double> {
 
