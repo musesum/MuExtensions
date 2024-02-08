@@ -4,9 +4,9 @@
 
 import CompositorServices
 
-extension LayerRenderer.Clock.Instant {
+public extension LayerRenderer.Clock.Instant {
 
-    public func toTimeInterval() -> TimeInterval {
+    func toTimeInterval() -> TimeInterval {
     
         let duration = LayerRenderer.Clock.Instant.epoch.duration(to: self)
         let secondsPart = Double(duration.components.seconds)
@@ -15,9 +15,9 @@ extension LayerRenderer.Clock.Instant {
     }
 }
 
-extension LayerRenderer.Clock.Instant.Duration {
+public extension LayerRenderer.Clock.Instant.Duration {
 
-    public var timeInterval: TimeInterval {
+    var timeInterval: TimeInterval {
         
         let nanoseconds = TimeInterval(components.attoseconds / 1_000_000_000)
         return TimeInterval(components.seconds) + (nanoseconds / TimeInterval(NSEC_PER_SEC))

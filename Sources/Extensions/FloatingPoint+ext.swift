@@ -4,12 +4,12 @@
 
 import Foundation
 
-extension Formatter {
+public extension Formatter {
     static let number = NumberFormatter()
 }
 public extension FloatingPoint {
 
-    public func digits(_ range: ClosedRange<Int>) -> String {
+    func digits(_ range: ClosedRange<Int>) -> String {
         let lower: Int
         let minus: Bool
         if range.lowerBound < 0 {
@@ -25,8 +25,9 @@ public extension FloatingPoint {
         let str = Formatter.number.string(for:  self) ?? ""
         return minus && self < 0 ? str : " " + str
     }
-    public func digits(_ range: Int) -> String {
-        
+
+    func digits(_ range: Int) -> String {
+
         let lower: Int
         let minus: Bool
         if range < 0 {

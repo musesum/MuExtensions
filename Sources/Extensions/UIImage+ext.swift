@@ -2,9 +2,9 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
 
-    public class func getIconPath(_ path: String, name: String) -> UIImage? {
+    class func getIconPath(_ path: String, name: String) -> UIImage? {
 
         var img = UIImage(named: name)
         if img == nil {
@@ -19,7 +19,7 @@ extension UIImage {
         return img
     }
 
-    public func circularImage(size: CGSize?) -> UIImage? {
+    func circularImage(size: CGSize?) -> UIImage? {
         
         let newSize = size ?? self.size
 
@@ -47,14 +47,14 @@ extension UIImage {
         return nil
     }
 
-    public func cropImage(toRect rect: CGRect) -> UIImage? {
+    func cropImage(toRect rect: CGRect) -> UIImage? {
 
         if let imageRef = self.cgImage?.cropping(to: rect) {
             return UIImage(cgImage: imageRef)
         }
         return nil
     }
-    public func roundIcon(_ diameter: CGFloat) -> UIImage? {
+    func roundIcon(_ diameter: CGFloat) -> UIImage? {
 
         let w = size.width
         let h = size.height
@@ -80,7 +80,7 @@ extension UIImage {
 
     }
 
-    public func rounded(radius: CGFloat) -> UIImage {
+    func rounded(radius: CGFloat) -> UIImage {
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         UIBezierPath(roundedRect: rect, cornerRadius: radius).addClip()
@@ -88,7 +88,7 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()!
     }
 
-    public func scaledTo(_ newSize: CGSize) -> UIImage {
+    func scaledTo(_ newSize: CGSize) -> UIImage {
 
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)

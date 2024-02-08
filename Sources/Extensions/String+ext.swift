@@ -3,20 +3,20 @@
 
 import Foundation
 
-extension String {
+public extension String {
 
-    public subscript(idx: Int) -> String {
+     subscript(idx: Int) -> String {
         String(self[index(startIndex, offsetBy: idx)])
     }
 
-    public static func pointer(_ object: AnyObject?) -> String {
+    static func pointer(_ object: AnyObject?) -> String {
         guard let object = object else { return "nil" }
         let opaque: UnsafeMutableRawPointer = Unmanaged.passUnretained(object).toOpaque()
         return String(describing: opaque)
     }
 
 
-    public func pad(_ len: Int) -> String {
+    func pad(_ len: Int) -> String {
         let ofs = len < 0 ? max(0, count+len) : 0
         let last = min(ofs + abs(len), count)
         let start = index(startIndex,offsetBy: ofs)
@@ -34,7 +34,7 @@ extension String {
 
     /// transform `"CamelBackName"` => `"camel back name"`
     /// - note: https://stackoverflow.com/a/50202999/419740
-    public func titleCase() -> String {
+    func titleCase() -> String {
         return self
             .replacingOccurrences(of: "([A-Z])",
                                   with: " $1",
@@ -44,12 +44,12 @@ extension String {
             .lowercased()
     }
 
-    public func roundColonSpace() -> String {
+    func roundColonSpace() -> String {
         if self.hasSuffix("= ") { return ""  }
         if self.hasSuffix("=")  { return " " }
         else                    { return " = "}
     }
-    public func singleSuffix(_ suf: String) -> String {
+    func singleSuffix(_ suf: String) -> String {
         if hasSuffix(suf) { return self }
         var dropCount = 0
         for char in self.reversed() {
@@ -63,7 +63,7 @@ extension String {
     }
 
     /// transform `" one  two   three  "` => `"one two three"`
-    public func removeLines() -> String {
+    func removeLines() -> String {
 
         var result = ""
         var prevChar = Character("\0")
@@ -85,7 +85,7 @@ extension String {
         return result
     }
     /// transform `"one\n\n two\n \n three   "` => `"one\n two\n three   "`
-    public func reduceLines() -> String {
+    func reduceLines() -> String {
 
         var result = ""
         var prevChar = Character("\n")
@@ -102,7 +102,7 @@ extension String {
         return result
     }
 
-    public func superScript(_ num: Int) -> String {
+    func superScript(_ num: Int) -> String {
         var s = ""
         let numStr = String(num)
         for n in numStr.utf8 {
@@ -112,19 +112,19 @@ extension String {
         return self+s
     }
 
-    public func substring(from: Int) -> String {
+    func substring(from: Int) -> String {
         return self[min(from, count) ..< count]
     }
 
-    public func substring(from: Int, to: Int) -> String {
+    func substring(from: Int, to: Int) -> String {
         return self[min(from, count) ..< min(to, count)]
     }
 
-    public func substring(to: Int) -> String {
+    func substring(to: Int) -> String {
         return self[0 ..< max(0, to)]
     }
 
-    public subscript (r: Range<Int>) -> String {
+    subscript (r: Range<Int>) -> String {
 
         let range = Range(uncheckedBounds: (lower: max(0, min(count, r.lowerBound)),
                                             upper: min(count, max(0, r.upperBound))))
@@ -134,7 +134,7 @@ extension String {
     }
     /// split "a~b" into "a","~","b"
     ///
-    public func splitWild(_ wild: String) -> (String, String, String) {
+    func splitWild(_ wild: String) -> (String, String, String) {
 
         var prefix    = "" // a in a~b
         var wildcard  = "" // ~ in a~b
@@ -156,13 +156,13 @@ extension String {
         return (prefix, wildcard, suffix)
     }
 
-    public func matches(pre prefix: String, suf suffix: String) -> Bool {
+    func matches(pre prefix: String, suf suffix: String) -> Bool {
 
         return hasPrefix(prefix) && hasSuffix(suffix)
     }
 
     /// add a space if last character is not a space of left paren
-    public func parenSpace(delim: String = "") -> String {
+    func parenSpace(delim: String = "") -> String {
     
         if last == "(" { return "" }
         if last == " " { return "" }
@@ -170,7 +170,7 @@ extension String {
     }
 
     /// append string to self with spacing
-    public mutating func spacePlus(_ str: String?) {
+    mutating func spacePlus(_ str: String?) {
         
         guard let str else { return }
         if str == "" { return }
@@ -182,7 +182,7 @@ extension String {
 
     /// remove trailing spaces before adding character.
     /// often used to insure a single trailing space, instead of two.
-    public func with(trailing: String) -> String {
+    func with(trailing: String) -> String {
     
         var trim = self
         while trim.last == " " { trim.removeLast() }
@@ -191,14 +191,14 @@ extension String {
 
     /// remove trailing spaces
     /// often used to insure a single trailing space, instead of two.
-    public func without(trailing: String) -> String {
+    func without(trailing: String) -> String {
     
         var trim = self
         while let last = trim.last, trailing.contains(last) { trim.removeLast() }
         return trim
     }
 
-    static public func * (lhs: String, rhs: Int) -> String {
+    static func * (lhs: String, rhs: Int) -> String {
 
         var str = ""
         for _ in 0 ..< rhs {
@@ -207,7 +207,7 @@ extension String {
         return str
     }
 
-    public func strHash() -> Int {
+    func strHash() -> Int {
   
         var result = Int (5381)
         let buf = [UInt8](self.utf8)
@@ -218,7 +218,7 @@ extension String {
     }
 
     // Divider to separate listings
-    public func divider(_ length: Int = 30) -> String {
+    func divider(_ length: Int = 30) -> String {
     
         return self + "\n" + "─".padding(toLength: 30, withPad: "─", startingAt: 0) + "\n"
     }

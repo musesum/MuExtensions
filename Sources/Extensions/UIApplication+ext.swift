@@ -3,9 +3,9 @@
 
 import UIKit
 
-extension UIApplication {
-    
-    public static func uiOrientation() -> UIInterfaceOrientation {
+public extension UIApplication {
+
+    static func uiOrientation() -> UIInterfaceOrientation {
         
         let orientation = UIApplication
             .shared

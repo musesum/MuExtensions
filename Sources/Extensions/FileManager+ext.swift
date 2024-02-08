@@ -3,16 +3,16 @@
 
 import Foundation
 
-extension FileManager {
+public extension FileManager {
 
-    public func urls(for directory: FileManager.SearchPathDirectory, skipsHiddenFiles: Bool = true ) -> [URL]? {
+    func urls(for directory: FileManager.SearchPathDirectory, skipsHiddenFiles: Bool = true ) -> [URL]? {
 
         let documentsURL = urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURLs = try? contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: skipsHiddenFiles ? .skipsHiddenFiles : [] )
         return fileURLs
     }
 
-    public func contentsOf(ext: String?) -> [URL] {
+    func contentsOf(ext: String?) -> [URL] {
         do {
             let docURL = urls(for: .documentDirectory, in: .userDomainMask).first!
             let allFiles = try contentsOfDirectory(at: docURL, includingPropertiesForKeys: nil)
@@ -28,7 +28,7 @@ extension FileManager {
         }
     }
 
-    public func removeItemIfExist(at url: URL) {
+    func removeItemIfExist(at url: URL) {
         do {
             if FileManager.default.fileExists(atPath: url.path) {
                 try FileManager.default.removeItem(at: url)

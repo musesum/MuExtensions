@@ -4,9 +4,9 @@
 import Foundation
 import CoreImage
 
-extension CGImage {
+public extension CGImage {
 
-    public func pixelData() -> [UInt8]? {
+    func pixelData() -> [UInt8]? {
 
         let sizeW = width
         let sizeH = height
@@ -33,9 +33,9 @@ extension CGImage {
     }
 }
 
-extension CIImage {
+public extension CIImage {
 
-    public func pixelData(_ rect: CGRect) -> [UInt8]? {
+    func pixelData(_ rect: CGRect) -> [UInt8]? {
         let context = CIContext()
         let cgImage = context.createCGImage(self, from: rect)
         return cgImage?.pixelData()

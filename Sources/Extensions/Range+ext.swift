@@ -12,16 +12,16 @@ extension ClosedRange {
 }
 //???
 public func scale(_ value: Double,
-           from: ClosedRange<Double>,
-           to: ClosedRange<Double>,
-           invert: Bool = false) -> Double {
-
+                  from: ClosedRange<Double>,
+                  to: ClosedRange<Double>,
+                  invert: Bool = false) -> Double {
+    
     let val = Double(value)
     
     let toSpan = to.upperBound - to.lowerBound // to
     let frSpan = from.upperBound - from.lowerBound // from
     let from01 = (val.clamped(to: from) - from.lowerBound) / frSpan
     let scaled = (from01 * toSpan) + to.lowerBound
-
+    
     return invert ? 1-scaled : scaled
 }
