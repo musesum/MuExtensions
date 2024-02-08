@@ -97,20 +97,7 @@ public extension CGRect {
         return pp
     }
     
-    /// normalize to 0...1 //?? replace with normalizeTo01 ??
-    func normalize() -> CGRect {
-        let x = origin.x
-        let y = origin.y
-        let w = size.width
-        let h = size.height
-        
-        let pp = CGRect(x: x / w,
-                        y: y / h,
-                        width: (w - 2*x) / w,
-                        height:(h - 2*y) / h)
-        return pp
-    }
-    
+
     /// scale down to a point p normalized between 0...1
     func normalizeTo01(_ p: CGPoint) -> CGPoint {
         
@@ -230,6 +217,24 @@ public extension CGRect {
         let result = CGRect(x: rx0, y: ry0, width: rx1-rx0, height: ry1-ry0)
         return result
     }
+
+    /// normalize to 0...1
+    func normalize() -> CGRect {
+        let x = origin.x
+        let y = origin.y
+        let w = size.width
+        let h = size.height
+
+        let pp = CGRect(x: x / w,
+                        y: y / h,
+                        width: (w - 2*x) / w,
+                        height:(h - 2*y) / h)
+        return pp
+    }
+
+    func floats() -> [Float] {
+        return [Float(minX),Float(minY),Float(width),Float(height)]
+    }
 }
 
 public extension CGPoint {
@@ -324,6 +329,9 @@ public extension CGPoint {
     func doubles() -> [Double] {
         return [Double(x), Double(y)]
     }
+    func floats() -> [Float] {
+        return [Float(x),Float(y)]
+    }
 }
 
 public extension CGSize {
@@ -367,15 +375,7 @@ public extension CGSize {
         return s
     }
     
-    static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        
-        let ww = lhs.width * rhs
-        let hh = lhs.height * rhs
-        let s = CGSize(width: ww, height: hh)
-        return s
-    }
-    
-    static func - (lhs: CGSize, rhs: CGPoint) -> CGSize {
+       static func - (lhs: CGSize, rhs: CGPoint) -> CGSize {
         let ww = lhs.width - rhs.x
         let hh = lhs.height - rhs.y
         let s = CGSize(width: ww, height: hh)
@@ -410,6 +410,17 @@ public extension CGSize {
         
         let size = CGSize(width: ww, height: hh)
         return size
+    }
+    static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+
+        let ww = lhs.width * rhs
+        let hh = lhs.height * rhs
+        let s = CGSize(width: ww, height: hh)
+        return s
+    }
+
+    func floats() -> [Float] {
+        return [Float(width),Float(height)]
     }
 }
 
