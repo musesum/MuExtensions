@@ -8,7 +8,11 @@ public extension String {
      subscript(idx: Int) -> String {
         String(self[index(startIndex, offsetBy: idx)])
     }
-
+    subscript(range: ClosedRange<Int>) -> String {
+        let startIndex = index(startIndex, offsetBy: range.lowerBound)
+        let endIndex = index(startIndex, offsetBy: range.upperBound)
+        return String(self[startIndex..<endIndex])
+    }
     static func pointer(_ object: AnyObject?) -> String {
         guard let object = object else { return "nil" }
         let opaque: UnsafeMutableRawPointer = Unmanaged.passUnretained(object).toOpaque()

@@ -1,7 +1,8 @@
 // created by musesum on 12/22/23
 
-import simd
 
+import simd
+import Metal
 public extension SIMD2<Float> {
 
     func script(_ range: Int) -> String {
@@ -70,6 +71,17 @@ public extension simd_double4x4 {
         return "(\(columns.0.script), \(columns.1.script), \(columns.2.script), \(columns.3.script))"
     }
 }
+
+public func projection(_ size: CGSize) -> simd_float4x4 {
+
+    let aspect = Float(size.width / size.height)
+    let fovy = Float(aspect > 1 ? 60.0 : 90.0) / 180.0 * .pi
+    let nearZ = Float(0.1)
+    let farZ = Float(100)
+
+    return perspective4x4(aspect, fovy, nearZ, farZ)
+}
+
 public func perspective4x4(_ aspect: Float,
                            _ fovy  : Float,
                            _ nearZ : Float,
