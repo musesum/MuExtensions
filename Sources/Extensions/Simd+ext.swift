@@ -3,6 +3,17 @@
 
 import simd
 import Metal
+
+public extension Float {
+    func scale(_ s: Float) -> matrix_float4x4 {
+
+        return matrix_float4x4.init(columns:(vector_float4(1, 0, 0, s),
+                                             vector_float4(0, 1, 0, s),
+                                             vector_float4(0, 0, 1, s),
+                                             vector_float4(0, 0, 0, 1)))
+    }
+}
+
 public extension SIMD2<Float> {
 
     func script(_ range: Int) -> String {
@@ -24,6 +35,19 @@ public extension SIMD3<Float> {
     var script: String {
         "(\(x.digits(-1)),\(y.digits(-1)),\(z.digits(-1)))"
     }
+    func rotate(radians: Float) ->  matrix_float4x4 {
+        let rotate = normalize(self)
+        let ct = cosf(radians)
+        let st = sinf(radians)
+        let ci = 1 - ct
+        let x = rotate.x, y = rotate.y, z = rotate.z
+        let col0 = vector_float4(x*x*ci + ct  , y*x*ci + z*st, z*x*ci - y*st, 0)
+        let col1 = vector_float4(x*y*ci - z*st, y*y*ci +   ct, z*y*ci + x*st, 0)
+        let col2 = vector_float4(x*z*ci + y*st, y*z*ci - x*st, z*z*ci + ct  , 0)
+        let col3 = vector_float4(            0,             0,             0, 1)
+        return matrix_float4x4.init(columns:(col0,col1,col2,col3))
+
+    }
 }
 public extension SIMD4<Float> {
 
@@ -39,6 +63,13 @@ public extension SIMD4<Float> {
     }
     var xyz: SIMD3<Scalar> {
         SIMD3(x, y, z)
+    }
+    var translate: matrix_float4x4 {
+
+        return matrix_float4x4.init(columns:(vector_float4(1, 0, 0, 0),
+                                             vector_float4(0, 1, 0, 0),
+                                             vector_float4(0, 0, 1, 0),
+                                             vector_float4(self.x, self.y, self.z, 1)))
     }
 }
 public extension SIMD4<Double> {
