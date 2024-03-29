@@ -366,7 +366,15 @@ public extension CGSize {
         let s = CGSize(width: ww, height: hh)
         return s
     }
-    
+
+    static func - (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        let ww = lhs.width - rhs
+        let hh = lhs.height - rhs
+        let s = CGSize(width: ww, height: hh)
+        return s
+    }
+
+
     static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
         
         let ww = lhs.width / rhs

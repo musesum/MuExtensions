@@ -48,6 +48,7 @@ public extension SIMD3<Float> {
         return matrix_float4x4.init(columns:(col0,col1,col2,col3))
 
     }
+
 }
 public extension SIMD4<Float> {
 
@@ -140,4 +141,52 @@ public func translation(_ t: vector_float4) -> matrix_float4x4 {
 
     let mat = matrix_float4x4([X,Y,Z,W])
     return mat
+}
+public extension SIMD2<Double> {
+    
+    init(_ point: CGPoint) {
+        self.init(x: Double(point.x), y: Double(point.y))
+    }
+    func quantize(_ div: Double) -> SIMD2<Double> {
+
+        let xx = (x * div).rounded() / div
+        let yy = (y * div).rounded() / div
+        return SIMD2<Double>(x: xx, y: yy)
+    }
+    func clamped(to limits: ClosedRange<Double>) -> SIMD2<Double> {
+        return SIMD2<Double>( x: x.clamped(to: limits),
+                              y: y.clamped(to: limits))
+    }
+    func distance(_ from: SIMD2<Double>) -> Double {
+
+        let result = sqrt((x-from.x)*(x-from.x) +
+                          (y-from.y)*(y-from.y) )
+        return result
+    }
+}
+public extension SIMD3<Double> {
+
+    init(_ point: CGPoint) {
+        self.init(x: Double(point.x), y: Double(point.y), z:  Double(0))
+    }
+
+    func quantize(_ div: Double) -> SIMD3<Double> {
+        let xx = (x * div).rounded() / div
+        let yy = (y * div).rounded() / div
+        let zz = (z * div).rounded() / div
+        return SIMD3<Double>(x: xx, y: yy, z: zz)
+    }
+
+    func clamped(to limits: ClosedRange<Double>) -> SIMD3<Double> {
+        return SIMD3<Double>( x: x.clamped(to: limits),
+                              y: y.clamped(to: limits),
+                              z: z.clamped(to: limits))
+    }
+}
+public extension Double {
+
+    func quantize(_ div: Double) -> Double {
+
+        return (self * div).rounded() / div
+    }
 }
