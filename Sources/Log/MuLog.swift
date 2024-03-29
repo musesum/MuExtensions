@@ -25,10 +25,10 @@ open class MuLog {
     
     /// log during runtime
     public static func RunLog(_ label: String,
-                              interval: TimeInterval,
+                              interval: TimeInterval = -1,
                               terminator: String = "\n",
-                              _ body: @escaping()->()) {
-        
+                              _ body: (()->())? = nil) {
+
         let timeNow = Date().timeIntervalSince1970
         if MuLog.timeStart == 0 {
             MuLog.timeStart = timeNow
@@ -38,7 +38,7 @@ open class MuLog {
         if timeNow - timePrev > interval {
             prevTime[label] = timeNow
             print("\(timeDelta.digits(2)): \(label)", terminator: terminator)
-            body()
+            body?()
         }
     }
     /// log when debug
